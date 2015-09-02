@@ -1,4 +1,4 @@
-## Simple Vagrant VM
+## simple vagrant vm
 
 `ubuntu/trusty64` for devvin
 
