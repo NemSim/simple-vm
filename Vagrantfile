@@ -7,12 +7,14 @@ VAGRANTFILE_API_VERSION = '2'
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = 'ubuntu/trusty64'
 
-  # ex: accessing "localhost:8080" will access port 80 on the vagrant machine.
-  # config.vm.network "forwarded_port", guest: 80, host: 8080
+  # accessing "localhost:9090" will access port 80 on the vagrant machine.
+  config.vm.network 'forwarded_port', guest: 80, host: 9090
 
   # config.vm.network "private_network", ip: "192.168.33.10"
 
-  config.vm.provision :shell, path: 'bootstrap.sh'
+  config.vm.provision :ansible do |ansible|
+    ansible.playbook = 'playbook.yml'
+  end
 
   config.vm.provider 'virtualbox' do |vb|
     # use 2G of memory

@@ -1,0 +1,55 @@
+# https://adamcod.es/2014/09/23/vagrant-ansible-quickstart-tutorial.html
+---
+- hosts: all
+  sudo: true
+  tasks:
+    - name:       update apt cache
+      apt:        update_cache=yes
+    - name:       install required packages
+      apt:        name={{ item }} state=present
+      with_items:
+        - zsh
+        - git
+        - rake
+        - silversearcher-ag
+        - libffi-dev
+        - libssl-dev
+        - libreadline-dev
+        - zlib1g-dev
+    - name:       checkout dotfiles
+      git:
+        repo:     https://github.com/NemSim/dotfiles.git
+        version:  master
+        dest:     /home/vagrant/dotfiles
+      sudo:       yes
+      sudo_user:  vagrant
+    - name:       checkout z
+      git:
+        repo:     https://github.com/rupa/z.git
+        version:  master
+        dest:     /home/vagrant/tools/z
+      sudo:       yes
+      sudo_user:  vagrant
+    - name:       install rbenv
+      git:
+        repo:     https://github.com/sstephenson/rbenv.git
+        version:  master
+        dest:     /home/vagrant/.rbenv
+      sudo:       yes
+      sudo_user:  vagrant
+    - name:       install ruby-build
+      git:
+        repo:     https://github.com/sstephenson/ruby-build.git
+        version:  master
+        dest:     /home/vagrant/.rbenv/plugins/ruby-build
+      sudo:       yes
+      sudo_user:  vagrant
+    - name:       set up dotfiles
+      command:    "/usr/bin/rake install['/home/vagrant/']"
+      args:
+        chdir:    /home/vagrant/dotfiles
+      sudo:       yes
+    - name:       install vim plugins
+      command:    'vim +PluginInstall +qall'
+      sudo:       yes
+      sudo_user:  vagrant
