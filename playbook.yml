@@ -16,6 +16,7 @@
         - libssl-dev
         - libreadline-dev
         - zlib1g-dev
+        - jq
     - name:       checkout dotfiles
       git:
         repo:     https://github.com/NemSim/dotfiles.git
