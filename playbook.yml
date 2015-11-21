@@ -10,7 +10,6 @@
       with_items:
         - zsh
         - git
-        - rake
         - silversearcher-ag
         - libffi-dev
         - libssl-dev
@@ -43,14 +42,5 @@
         repo:     https://github.com/sstephenson/ruby-build.git
         version:  master
         dest:     /home/vagrant/.rbenv/plugins/ruby-build
-      sudo:       yes
-      sudo_user:  vagrant
-    - name:       set up dotfiles
-      command:    "/usr/bin/rake install['/home/vagrant/']"
-      args:
-        chdir:    /home/vagrant/dotfiles
-      sudo:       yes
-    - name:       install vim plugins
-      command:    'vim +PluginInstall +qall'
       sudo:       yes
       sudo_user:  vagrant
